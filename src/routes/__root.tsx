@@ -11,6 +11,12 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Header } from "../components/site/Header";
+import { Footer } from "../components/site/Footer";
+import { EmergencyBar } from "../components/site/EmergencyBar";
+import { MobileCallBar } from "../components/site/MobileCallBar";
+import { Toaster } from "../components/ui/sonner";
+import { SITE } from "../lib/site";
 
 function NotFoundComponent() {
   return (
@@ -77,21 +83,50 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Summit Climate Co. — Denver HVAC, Heating & AC Experts" },
+      { name: "description", content: "Denver's premium HVAC contractor. 24/7 emergency heating & air conditioning repair, installation, and maintenance. Licensed, insured, NATE-certified." },
+      { name: "author", content: "Summit Climate Co." },
+      { property: "og:site_name", content: "Summit Climate Co." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "theme-color", content: "#0B1E3F" },
     ],
     links: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" },
       {
         rel: "stylesheet",
         href: appCss,
       },
     ],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "HVACBusiness",
+        name: SITE.name,
+        telephone: SITE.phone,
+        email: SITE.email,
+        url: "/",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: SITE.address.street,
+          addressLocality: SITE.address.city,
+          addressRegion: SITE.address.state,
+          postalCode: SITE.address.zip,
+          addressCountry: "US",
+        },
+        areaServed: ["Denver", "Aurora", "Lakewood", "Boulder", "Centennial", "Westminster", "Arvada"],
+        openingHoursSpecification: [{
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          opens: "00:00", closes: "23:59",
+        }],
+        aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "827" },
+        priceRange: "$$",
+      }),
+    }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -101,11 +136,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         {children}
         <Scripts />
       </body>
@@ -118,8 +153,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <EmergencyBar />
+      <Header />
+      <main className="min-h-[60vh]">
+        <Outlet />
+      </main>
+      <Footer />
+      <MobileCallBar />
+      <Toaster richColors closeButton position="top-center" />
     </QueryClientProvider>
   );
 }
