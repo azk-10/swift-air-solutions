@@ -90,6 +90,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "theme-color", content: "#0B1E3F" },
+      { property: "og:title", content: "Summit Climate Co. — Denver HVAC, Heating & AC Experts" },
+      { name: "twitter:title", content: "Summit Climate Co. — Denver HVAC, Heating & AC Experts" },
+      { property: "og:description", content: "Denver's premium HVAC contractor. 24/7 emergency heating & air conditioning repair, installation, and maintenance. Licensed, insured, NATE-certified." },
+      { name: "twitter:description", content: "Denver's premium HVAC contractor. 24/7 emergency heating & air conditioning repair, installation, and maintenance. Licensed, insured, NATE-certified." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/f86889cd-60ee-481f-9cae-0211aa65f601" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/f86889cd-60ee-481f-9cae-0211aa65f601" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
